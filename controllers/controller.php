@@ -9,11 +9,27 @@ switch ($action) {
     break;
 
   case 'logout':
-    // code...
+    if (isset($_SESSION['userId'])) {
+      unset($_SESSION['userId']);
+    }
+    header('Location: ?action=display');
     break;
 
   case 'login':
-    // code...
+    include "../models/UserManager.php";
+    if (isset($_POST['username']) && isset($_POST['password'])) {
+      $userId = GetUserIdFromUserAndPassword($_POST['username'], $_POST['password']);
+      var_dump($userId);
+      if ($userId > 0) {
+        $_SESSION['userId'] = $userId;
+        header('Location: ?action=display');
+      } else {
+        $errorMsg = "Wrong login and/or password.";
+        include "../views/LoginForm.php";
+      }
+    } else {
+      include "../views/LoginForm.php";
+    }
     break;
 
   case 'newMsg':

@@ -29,17 +29,24 @@
       <ul class="navbar-nav mr-auto">
       </ul>
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <form class="nav-link" method="get">
-            <input name="search" type="text"></input>
-          </form>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="?action=login" role="button">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="?action=register" role="button">Sign Up</a>
-        </li>
+        <?php
+        if (isset($_SESSION['userId'])) {
+        ?>
+          <li class="nav-item">
+            <a class="nav-link" href="?action=logout" role="button">Logout</a>
+          </li>
+        <?php
+        } else {
+        ?>
+          <li class="nav-item">
+            <a class="nav-link" href="?action=login" role="button">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="?action=register" role="button">Sign Up</a>
+          </li>
+        <?php
+        }
+        ?>
       </ul>
     </div>
   </header>
