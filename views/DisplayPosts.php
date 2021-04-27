@@ -62,6 +62,20 @@
         </blockquote>
       </div>
     </div>
+    <?php
+    if (isset($_SESSION['userId'])) {
+    ?>
+      <div class="row newMsg">
+        <div class="col">
+          <form class="input-group" method="POST" action="?action=newMsg">
+            <input name="msg" class="form-control" placeholder="Add a message" type="text">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    <?php
+    }
+    ?>
     <div class="row">
       <div class="col">
         <?php
