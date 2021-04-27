@@ -4,7 +4,14 @@ include_once "PDO.php";
 function GetOneCommentFromId($id)
 {
   global $PDO;
-  $response = $PDO->query("SELECT * FROM comment WHERE id = $id");
+
+  $data = [
+    'id' => $id
+  ];
+
+  $sql = "SELECT * FROM comment WHERE id = :id ";
+  $response = $PDO->prepare($sql);
+  $response->execute($data);
   return $response->fetch();
 }
 
