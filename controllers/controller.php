@@ -5,7 +5,28 @@ $action = $_GET["action"] ?? "display";
 switch ($action) {
 
   case 'register':
-    // code...
+    include "../models/UserManager.php";
+    if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['passwordRetype'])) {
+      $errorMsg = NULL;
+      if (!IsNicknameFree($_POST['username'])) {
+        $errorMsg = "Nickname already used.";
+      } else if ($_POST['password'] != $_POST['passwordRetype']) {
+        $errorMsg = "Passwords are not the same.";
+      } else if (strlen(trim($_POST['password'])) < 8) {
+        $errorMsg = "Your password should have at least 8 characters.";
+      } else if (strlen(trim($_POST['username'])) < 4) {
+        $errorMsg = "Your nickame should have at least 4 characters.";
+      }
+      if ($errorMsg) {
+        include "../views/RegisterForm.php";
+      } else {
+        $userId = CreateNewUser($_POST['username'], $_POST['password']);
+        $_SESSION['userId'] = $userId;
+        header('Location: ?action=display');
+      }
+    } else {
+      include "../views/RegisterForm.php";
+    }
     break;
 
   case 'logout':
