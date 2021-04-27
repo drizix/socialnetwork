@@ -82,9 +82,16 @@ switch ($action) {
     include "../models/CommentManager.php";
     $comments = array();
 
-    for ($i = 0; $i < sizeof($posts); $i++) {
-      $comments[$i] =  GetAllCommentsFromPostId($posts[$i]['id']);
+    // for ($i = 0; $i < sizeof($posts); $i++) {
+    //   $comments[$i] =  GetAllCommentsFromPostId($posts[$i]['id']);
+    // }
+
+    foreach ($posts as $onePost) {
+      $postId = $onePost['id'];
+      $commentsForThisPostId = GetAllCommentsFromPostId($postId);
+      $comments[$postId] = $commentsForThisPostId;
     }
+
     // ===================HARDCODED PART===========================
     // format idPost => array of comments
     // $comments[1] = array(
