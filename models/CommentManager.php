@@ -4,7 +4,14 @@ include_once "PDO.php";
 function GetOneCommentFromId($id)
 {
   global $PDO;
-  $response = $PDO->query("SELECT * FROM comment WHERE id = $id");
+
+  $data = [
+    'id' => $id
+  ];
+
+  $sql = "SELECT * FROM comment WHERE id = :id ";
+  $response = $PDO->prepare($sql);
+  $response->execute($data);
   return $response->fetch();
 }
 
@@ -37,4 +44,19 @@ function  GetAllCommentsFromPostId($postId)
       . "ORDER BY comment.created_at ASC"
   );
   return $response->fetchAll();
+}
+
+function CreateNewComment($userId, $postId, $comment)
+{
+  global $PDO;
+
+  $data = [
+    'userId' => $userId,
+    'postId' => $postId,
+    'comment' => $comment
+  ];
+
+  $sql = "INSERT INTO comment(user_id, post_id, content) values (:userId, :postId, :comment)";
+  $stmt = $PDO->prepare($sql);
+  $stmt->execute($data);
 }
