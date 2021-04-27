@@ -39,6 +39,11 @@
         } else {
         ?>
           <li class="nav-item">
+            <form class="nav-link" method="get">
+              <input name="search" type="text"></input>
+            </form>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="?action=login" role="button">Login</a>
           </li>
           <li class="nav-item">
